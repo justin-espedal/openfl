@@ -40,7 +40,7 @@ class DrawCommandReader
 		prev = UNKNOWN;
 	}
 
-	@:noCompletion private inline function advance():Void
+	@:noCompletion private function advance():Void
 	{
 		switch (prev)
 		{
