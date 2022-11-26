@@ -23,7 +23,7 @@ class DOMShape
 		#end
 	}
 
-	public static inline function render(shape:DisplayObject, renderer:DOMRenderer):Void
+	public static function render(shape:DisplayObject, renderer:DOMRenderer):Void
 	{
 		#if (js && html5)
 		var graphics = shape.__graphics;

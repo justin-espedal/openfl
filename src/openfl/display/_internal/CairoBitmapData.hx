@@ -12,7 +12,7 @@ import lime.graphics.cairo.CairoPattern;
 @:access(openfl.display.BitmapData)
 class CairoBitmapData
 {
-	public static inline function renderDrawable(bitmapData:BitmapData, renderer:CairoRenderer):Void
+	public static function renderDrawable(bitmapData:BitmapData, renderer:CairoRenderer):Void
 	{
 		#if lime_cairo
 		if (!bitmapData.readable) return;

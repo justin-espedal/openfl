@@ -19,7 +19,7 @@ import lime.math.ARGB;
 @SuppressWarnings("checkstyle:FieldDocComment")
 class Context3DDisplayObject
 {
-	public static inline function render(displayObject:DisplayObject, renderer:OpenGLRenderer):Void
+	public static function render(displayObject:DisplayObject, renderer:OpenGLRenderer):Void
 	{
 		if (displayObject.opaqueBackground == null && displayObject.__graphics == null) return;
 		if (!displayObject.__renderable || displayObject.__worldAlpha <= 0) return;
@@ -80,7 +80,7 @@ class Context3DDisplayObject
 		}
 	}
 
-	public static inline function renderMask(displayObject:DisplayObject, renderer:OpenGLRenderer):Void
+	public static function renderMask(displayObject:DisplayObject, renderer:OpenGLRenderer):Void
 	{
 		if (displayObject.opaqueBackground == null && displayObject.__graphics == null) return;
 

@@ -19,7 +19,7 @@ class DOMDisplayObject
 		#end
 	}
 
-	public static inline function render(displayObject:DisplayObject, renderer:DOMRenderer):Void
+	public static function render(displayObject:DisplayObject, renderer:DOMRenderer):Void
 	{
 		#if (js && html5)
 		// if (displayObject.opaqueBackground == null && displayObject.__graphics == null) return;

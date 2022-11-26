@@ -27,7 +27,7 @@ class CanvasTextField
 	private static var clearRect:Null<Bool>;
 	#end
 
-	public static inline function render(textField:TextField, renderer:CanvasRenderer, transform:Matrix):Void
+	public static function render(textField:TextField, renderer:CanvasRenderer, transform:Matrix):Void
 	{
 		#if (js && html5)
 		var textEngine = textField.__textEngine;

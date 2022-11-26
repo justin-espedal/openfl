@@ -429,7 +429,7 @@ class CairoTextField
 		#end
 	}
 
-	public static inline function renderDrawable(textField:TextField, renderer:CairoRenderer):Void
+	public static function renderDrawable(textField:TextField, renderer:CairoRenderer):Void
 	{
 		#if lime_cairo
 		renderer.__updateCacheBitmap(textField, textField.__dirty);
@@ -448,7 +448,7 @@ class CairoTextField
 		#end
 	}
 
-	public static inline function renderDrawableMask(textField:TextField, renderer:CairoRenderer):Void
+	public static function renderDrawableMask(textField:TextField, renderer:CairoRenderer):Void
 	{
 		CairoDisplayObject.renderDrawableMask(textField, renderer);
 	}

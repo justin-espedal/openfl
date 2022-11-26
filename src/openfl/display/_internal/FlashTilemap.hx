@@ -23,7 +23,7 @@ class FlashTilemap
 	private static var destPoint:Point = new Point();
 	private static var sourceRect:Rectangle = new Rectangle();
 
-	public static inline function render(tilemap:Tilemap):Void
+	public static function render(tilemap:Tilemap):Void
 	{
 		// TODO: Do not render if top-level group is not dirty
 

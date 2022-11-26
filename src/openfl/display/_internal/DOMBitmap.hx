@@ -40,7 +40,7 @@ class DOMBitmap
 		#end
 	}
 
-	public static inline function render(bitmap:Bitmap, renderer:DOMRenderer):Void
+	public static function render(bitmap:Bitmap, renderer:DOMRenderer):Void
 	{
 		#if (js && html5)
 		if (bitmap.stage != null && bitmap.__worldVisible && bitmap.__renderable && bitmap.__bitmapData != null && bitmap.__bitmapData.__isValid

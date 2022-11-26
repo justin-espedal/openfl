@@ -31,7 +31,7 @@ class DOMTilemap
 		#end
 	}
 
-	public static inline function render(tilemap:Tilemap, renderer:DOMRenderer):Void
+	public static function render(tilemap:Tilemap, renderer:DOMRenderer):Void
 	{
 		// TODO: Support GL-based Tilemap?
 

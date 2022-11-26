@@ -8,7 +8,7 @@ package openfl.display._internal;
 @:access(openfl.display.DisplayObjectContainer)
 class CairoDisplayObjectContainer
 {
-	public static inline function renderDrawable(displayObjectContainer:DisplayObjectContainer, renderer:CairoRenderer):Void
+	public static function renderDrawable(displayObjectContainer:DisplayObjectContainer, renderer:CairoRenderer):Void
 	{
 		#if lime_cairo
 		displayObjectContainer.__cleanupRemovedChildren();
@@ -43,7 +43,7 @@ class CairoDisplayObjectContainer
 		#end
 	}
 
-	public static inline function renderDrawableMask(displayObjectContainer:DisplayObjectContainer, renderer:CairoRenderer):Void
+	public static function renderDrawableMask(displayObjectContainer:DisplayObjectContainer, renderer:CairoRenderer):Void
 	{
 		#if lime_cairo
 		displayObjectContainer.__cleanupRemovedChildren();

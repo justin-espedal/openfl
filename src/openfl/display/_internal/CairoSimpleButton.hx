@@ -7,7 +7,7 @@ package openfl.display._internal;
 @:access(openfl.display.SimpleButton)
 class CairoSimpleButton
 {
-	public static inline function renderDrawable(simpleButton:SimpleButton, renderer:CairoRenderer):Void
+	public static function renderDrawable(simpleButton:SimpleButton, renderer:CairoRenderer):Void
 	{
 		if (!simpleButton.__renderable || simpleButton.__worldAlpha <= 0 || simpleButton.__currentState == null) return;
 
@@ -18,7 +18,7 @@ class CairoSimpleButton
 		renderer.__renderEvent(simpleButton);
 	}
 
-	public static inline function renderDrawableMask(simpleButton:SimpleButton, renderer:CairoRenderer):Void
+	public static function renderDrawableMask(simpleButton:SimpleButton, renderer:CairoRenderer):Void
 	{
 		renderer.__renderDrawableMask(simpleButton.__currentState);
 	}

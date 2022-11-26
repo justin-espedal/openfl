@@ -11,7 +11,7 @@ import lime.math.ARGB;
 @SuppressWarnings("checkstyle:FieldDocComment")
 class CanvasDisplayObject
 {
-	public static inline function render(displayObject:DisplayObject, renderer:CanvasRenderer):Void
+	public static function render(displayObject:DisplayObject, renderer:CanvasRenderer):Void
 	{
 		#if (js && html5)
 		if (displayObject.opaqueBackground == null && displayObject.__graphics == null) return;

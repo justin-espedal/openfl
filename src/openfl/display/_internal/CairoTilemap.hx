@@ -169,7 +169,7 @@ class CairoTilemap
 		#end
 	}
 
-	public static inline function renderDrawable(tilemap:Tilemap, renderer:CairoRenderer):Void
+	public static function renderDrawable(tilemap:Tilemap, renderer:CairoRenderer):Void
 	{
 		#if lime_cairo
 		renderer.__updateCacheBitmap(tilemap, /*!__worldColorTransform.__isDefault ()*/ false);

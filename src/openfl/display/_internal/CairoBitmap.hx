@@ -18,7 +18,7 @@ import lime.graphics.cairo.CairoPattern;
 @SuppressWarnings("checkstyle:FieldDocComment")
 class CairoBitmap
 {
-	public static inline function render(bitmap:Bitmap, renderer:CairoRenderer):Void
+	public static function render(bitmap:Bitmap, renderer:CairoRenderer):Void
 	{
 		#if lime
 		if (!bitmap.__renderable) return;
@@ -63,7 +63,7 @@ class CairoBitmap
 		#end
 	}
 
-	public static inline function renderDrawable(bitmap:Bitmap, renderer:CairoRenderer):Void
+	public static function renderDrawable(bitmap:Bitmap, renderer:CairoRenderer):Void
 	{
 		#if lime_cairo
 		renderer.__updateCacheBitmap(bitmap, /*!__worldColorTransform.__isDefault ()*/ false);
@@ -90,7 +90,7 @@ class CairoBitmap
 		#end
 	}
 
-	public static inline function renderDrawableMask(bitmap:Bitmap, renderer:CairoRenderer):Void
+	public static function renderDrawableMask(bitmap:Bitmap, renderer:CairoRenderer):Void
 	{
 		renderer.cairo.rectangle(0, 0, bitmap.width, bitmap.height);
 	}

@@ -24,7 +24,7 @@ import lime._internal.graphics.ImageCanvasUtil;
 @SuppressWarnings("checkstyle:FieldDocComment")
 class CanvasTilemap
 {
-	public static inline function render(tilemap:Tilemap, renderer:CanvasRenderer):Void
+	public static function render(tilemap:Tilemap, renderer:CanvasRenderer):Void
 	{
 		#if (js && html5)
 		if (!tilemap.__renderable || tilemap.__group.__tiles.length == 0) return;

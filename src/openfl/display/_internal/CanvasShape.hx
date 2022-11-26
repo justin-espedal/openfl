@@ -9,7 +9,7 @@ import openfl.display.DisplayObject;
 @SuppressWarnings("checkstyle:FieldDocComment")
 class CanvasShape
 {
-	public static inline function render(shape:DisplayObject, renderer:CanvasRenderer):Void
+	public static function render(shape:DisplayObject, renderer:CanvasRenderer):Void
 	{
 		#if (js && html5)
 		if (!shape.__renderable) return;

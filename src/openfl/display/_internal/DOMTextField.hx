@@ -75,7 +75,7 @@ class DOMTextField
 		#end
 	}
 
-	public static inline function render(textField:TextField, renderer:DOMRenderer):Void
+	public static function render(textField:TextField, renderer:DOMRenderer):Void
 	{
 		#if (js && html5)
 		var textEngine = textField.__textEngine;

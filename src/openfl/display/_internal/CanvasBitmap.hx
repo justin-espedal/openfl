@@ -11,7 +11,7 @@ import lime._internal.graphics.ImageCanvasUtil; // TODO
 @SuppressWarnings("checkstyle:FieldDocComment")
 class CanvasBitmap
 {
-	public static inline function render(bitmap:Bitmap, renderer:CanvasRenderer):Void
+	public static function render(bitmap:Bitmap, renderer:CanvasRenderer):Void
 	{
 		#if (js && html5)
 		if (!bitmap.__renderable) return;

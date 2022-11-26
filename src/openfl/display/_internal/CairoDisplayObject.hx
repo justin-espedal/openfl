@@ -51,7 +51,7 @@ class CairoDisplayObject
 		#end
 	}
 
-	public static inline function renderDrawable(displayObject:DisplayObject, renderer:CairoRenderer):Void
+	public static function renderDrawable(displayObject:DisplayObject, renderer:CairoRenderer):Void
 	{
 		#if lime_cairo
 		renderer.__updateCacheBitmap(displayObject, /*!__worldColorTransform.__isDefault ()*/ false);
@@ -69,7 +69,7 @@ class CairoDisplayObject
 		#end
 	}
 
-	public static inline function renderDrawableMask(displayObject:DisplayObject, renderer:CairoRenderer):Void
+	public static function renderDrawableMask(displayObject:DisplayObject, renderer:CairoRenderer):Void
 	{
 		#if lime_cairo
 		if (displayObject.__graphics != null)
