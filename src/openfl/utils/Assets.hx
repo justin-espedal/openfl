@@ -527,7 +527,7 @@ class Assets
 		@param	name		The name of the AssetLibrary to load
 		@return		Returns a Future<AssetLibrary>
 	**/
-	public static function loadLibrary(name:String):#if java Future<LimeAssetLibrary> #else Future<AssetLibrary> #end
+	public static function loadLibrary(name:String):Future<AssetLibrary>
 	{
 		#if lime
 		return LimeAssets.loadLibrary(name).then(function(library)
