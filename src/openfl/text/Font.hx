@@ -170,7 +170,7 @@ class Font #if lime extends LimeFont #end
 	public static function loadFromFile(path:String):Future<Font>
 	{
 		#if lime
-		return LimeFont.loadFromFile(path).then(function(limeFont)
+		return LimeFont._lime_loadFromFile(path).then(function(limeFont)
 		{
 			var font = new Font();
 			font.__fromLimeFont(limeFont);
@@ -196,7 +196,7 @@ class Font #if lime extends LimeFont #end
 	public static function loadFromName(path:String):Future<Font>
 	{
 		#if lime
-		return LimeFont.loadFromName(path).then(function(limeFont)
+		return LimeFont._lime_loadFromName(path).then(function(limeFont)
 		{
 			var font = new Font();
 			font.__fromLimeFont(limeFont);
