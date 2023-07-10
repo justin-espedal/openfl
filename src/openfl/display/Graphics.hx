@@ -1619,6 +1619,49 @@ import js.html.CanvasRenderingContext2D;
 		return graphicsData;
 	}
 
+	private var clipped:Bool = false;
+	private var clip_dx:Float = 0.0;
+	private var clip_dy:Float = 0.0;
+	private var clip_dw:Float = 0x0;
+	private var clip_dh:Float = 0x0;
+
+	public function clip(x:Float, y:Float, width:Float, height:Float)
+	{
+		if(__bounds == null)
+		{
+			clipped = false;
+			return;
+		}
+
+		clip_dx = 0;
+		clip_dy = 0;
+		clip_dw = 0;
+		clip_dh = 0;
+
+		if(__bounds.x < x)
+		{
+			clip_dx = x - __bounds.x;
+		}
+		if(__bounds.y < y)
+		{
+			clip_dy = y - __bounds.y;
+		}
+		if(__bounds.x + __bounds.width > x + width)
+		{
+			clip_dw = x + width - __bounds.width;
+		}
+		if(__bounds.y + __bounds.height > y + height)
+		{
+			clip_dh = y + height - __bounds.height;
+		}
+
+		clipped =
+			clip_dx != 0.0 ||
+			clip_dy != 0.0 ||
+			clip_dw != 0.0 ||
+			clip_dh != 0.0;
+	}
+
 	@:noCompletion
 	private #if !js inline #end function __calculateBezierCubicPoint(t:Float, p1:Float, p2:Float, p3:Float, p4:Float):Float
 	{
@@ -1897,8 +1940,8 @@ import js.html.CanvasRenderingContext2D;
 			#end
 		}
 
-		var width = __bounds.width * scaleX;
-		var height = __bounds.height * scaleY;
+		var width = (__bounds.width + clip_dw) * scaleX;
+		var height = (__bounds.height + clip_dh) * scaleY;
 
 		if (width < 1 || height < 1)
 		{
@@ -1911,13 +1954,13 @@ import js.html.CanvasRenderingContext2D;
 		if (maxTextureWidth != null && width > maxTextureWidth)
 		{
 			width = maxTextureWidth;
-			scaleX = maxTextureWidth / __bounds.width;
+			scaleX = maxTextureWidth / (__bounds.width + clip_dw);
 		}
 
 		if (maxTextureWidth != null && height > maxTextureHeight)
 		{
 			height = maxTextureHeight;
-			scaleY = maxTextureHeight / __bounds.height;
+			scaleY = maxTextureHeight / (__bounds.height + clip_dh);
 		}
 
 		var inverseA, inverseD;
@@ -1931,8 +1974,8 @@ import js.html.CanvasRenderingContext2D;
 		}
 		else
 		{
-			__renderTransform.a = width / __bounds.width;
-			__renderTransform.d = height / __bounds.height;
+			__renderTransform.a = width / (__bounds.width + clip_dw);
+			__renderTransform.d = height / (__bounds.height + clip_dh);
 			inverseA = (1 / __renderTransform.a);
 			inverseD = (1 / __renderTransform.d);
 		}
@@ -1943,8 +1986,8 @@ import js.html.CanvasRenderingContext2D;
 		__worldTransform.c = inverseD * parentTransform.c;
 		__worldTransform.d = inverseD * parentTransform.d;
 
-		var x = __bounds.x;
-		var y = __bounds.y;
+		var x = (__bounds.x + clip_dx);
+		var y = (__bounds.y + clip_dy);
 		var tx = x * parentTransform.a + y * parentTransform.c + parentTransform.tx;
 		var ty = x * parentTransform.b + y * parentTransform.d + parentTransform.ty;
 

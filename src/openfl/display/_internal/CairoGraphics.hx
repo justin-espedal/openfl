@@ -101,8 +101,9 @@ class CairoGraphics
 				point.setTo(1638.4, 0);
 				matrix.__transformPoint(point);
 
-				var x = matrix.tx + graphics.__bounds.x;
-				var y = matrix.ty + graphics.__bounds.y;
+				var x = matrix.tx + (graphics.__bounds.x + graphics.clip_dx);
+				var y = matrix.ty + (graphics.__bounds.y + graphics.clip_dy);
+
 
 				pattern = CairoPattern.createRadial(x, y, 0, x, y, Math.abs((point.x - matrix.tx) / 2));
 
@@ -115,10 +116,10 @@ class CairoGraphics
 				point2.setTo(819.2, 0);
 				matrix.__transformPoint(point2);
 
-				point.x += graphics.__bounds.x;
-				point2.x += graphics.__bounds.x;
-				point.y += graphics.__bounds.y;
-				point2.y += graphics.__bounds.y;
+				point.x += (graphics.__bounds.x + graphics.clip_dx);
+				point2.x += (graphics.__bounds.x + graphics.clip_dx);
+				point.y += (graphics.__bounds.y + graphics.clip_dy);
+				point2.y += (graphics.__bounds.y + graphics.clip_dy);
 
 				pattern = CairoPattern.createLinear(point.x, point.y, point2.x, point2.y);
 		}
@@ -483,6 +484,12 @@ class CairoGraphics
 
 		var offsetX = bounds.x;
 		var offsetY = bounds.y;
+
+		if(graphics.clipped)
+		{
+			offsetX += graphics.clip_dx;
+			offsetY += graphics.clip_dy;
+		}
 
 		var positionX = 0.0;
 		var positionY = 0.0;
@@ -1086,7 +1093,7 @@ class CairoGraphics
 
 			if (!stroke && hasFill)
 			{
-				cairo.translate(-bounds.x, -bounds.y);
+				cairo.translate(-offsetX, -offsetY);
 
 				if (fillPatternMatrix != null)
 				{
@@ -1117,7 +1124,7 @@ class CairoGraphics
 					if (!hitTesting) cairo.fillPreserve();
 				}
 
-				cairo.translate(bounds.x, bounds.y);
+				cairo.translate(offsetX, offsetY);
 				cairo.closePath();
 			}
 		}
@@ -1227,6 +1234,13 @@ class CairoGraphics
 			var hasLineStyle = false;
 			var initStrokeX = 0.0;
 			var initStrokeY = 0.0;
+
+			if(graphics.clipped)
+			{
+				cairo.newPath();
+				cairo.rectangle(0, 0, bounds.width + graphics.clip_dw, bounds.height + graphics.clip_dh);
+				cairo.clip ();
+			}
 
 			var data = new DrawCommandReader(graphics.__commands);
 
@@ -1450,6 +1464,11 @@ class CairoGraphics
 			}
 
 			data.destroy();
+
+			if(graphics.clipped)
+			{
+				cairo.resetClip();
+			}
 
 			graphics.__bitmap.image.dirty = true;
 			graphics.__bitmap.image.version++;
