@@ -1,5 +1,7 @@
 package openfl.display;
 
+import haxe.PosInfos;
+
 #if !flash
 import openfl.display._internal.IBitmapDrawableType;
 import openfl.display._internal.PerlinNoise;
@@ -221,6 +223,8 @@ class BitmapData implements IBitmapDrawable
 	@:noCompletion private var __worldColorTransform:ColorTransform;
 	@:noCompletion private var __worldTransform:Matrix;
 
+	@:noCompletion private var __posInfo:PosInfos;
+
 	/**
 		Creates a BitmapData object with a specified width and height. If you specify a value for
 		the `fillColor` parameter, every pixel in the bitmap is set to that color.
@@ -236,8 +240,9 @@ class BitmapData implements IBitmapDrawable
 		@param	transparent		Specifies whether the bitmap image supports per-pixel transparency. The default value is `true`(transparent). To create a fully transparent bitmap, set the value of the `transparent` parameter to `true` and the value of the `fillColor` parameter to 0x00000000(or to 0). Setting the `transparent` property to `false` can result in minor improvements in rendering performance.
 		@param	fillColor		A 32-bit ARGB color value that you use to fill the bitmap image area. The default value is 0xFFFFFFFF(solid white).
 	**/
-	public function new(width:Int, height:Int, transparent:Bool = true, fillColor:UInt = 0xFFFFFFFF)
+	public function new(width:Int, height:Int, transparent:Bool = true, fillColor:UInt = 0xFFFFFFFF, ?posInfo:PosInfos)
 	{
+		__posInfo = posInfo;
 		__drawableType = BITMAP_DATA;
 
 		this.transparent = transparent;
@@ -2221,6 +2226,9 @@ class BitmapData implements IBitmapDrawable
 				#end
 			}
 			#end
+
+			//lime.utils.Log.debug('Uploading texture (${textureImage.buffer.width} x ${textureImage.buffer.height})');
+			//lime.utils.Log.debug("Image Allocation Stamp", __posInfo);
 
 			__texture.__uploadFromImage(textureImage);
 
