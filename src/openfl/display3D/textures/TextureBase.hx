@@ -312,6 +312,7 @@ class TextureBase extends EventDispatcher
 			var gl = __context.gl;
 
 			if (__textureTarget == __context.gl.TEXTURE_CUBE_MAP) __context.__bindGLTextureCubeMap(__textureID);
+			else if (__textureTarget == __context.gl.TEXTURE_2D_ARRAY) __context.__bindGLTexture2DArray(__textureID);
 			else
 				__context.__bindGLTexture2D(__textureID);
 

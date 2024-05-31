@@ -912,6 +912,11 @@ import lime.math.Vector2;
 		return new Texture(this, width, height, format, optimizeForRenderToTexture, streamingLevels);
 	}
 
+	public function createTextureArray(width:Int, height:Int, layers:Int, format:Context3DTextureFormat):Texture
+	{
+		return new Texture2DArray(this, width, height, layers, format);
+	}
+
 	/**
 		Creates a VertexBuffer3D object.
 
@@ -1966,6 +1971,18 @@ import lime.math.Vector2;
 		// }
 	}
 
+	@:noCompletion private function __bindGLTexture2DArray(texture:GLTexture):Void
+	{
+		// TODO: Need to consider activeTexture ID
+
+		// if (#if openfl_disable_context_cache true #else __contextState.__currentGLTexture2DArray != texture #end) {
+
+		gl.bindTexture(gl.TEXTURE_2D_ARRAY, texture);
+		__contextState.__currentGLTexture2DArray = texture;
+
+		// }
+	}
+
 	@:noCompletion private function __bindGLTextureCubeMap(texture:GLTexture):Void
 	{
 		// TODO: Need to consider activeTexture ID
@@ -2352,6 +2369,10 @@ import lime.math.Vector2;
 				{
 					__bindGLTexture2D(texture.__getTexture());
 				}
+				else if (texture.__textureTarget == gl.TEXTURE_2D_ARRAY)
+				{
+					__bindGLTexture2DArray(texture.__getTexture());
+				}
 				else
 				{
 					__bindGLTextureCubeMap(texture.__getTexture());
@@ -2371,6 +2392,7 @@ import lime.math.Vector2;
 			else
 			{
 				__bindGLTexture2D(null);
+				__bindGLTexture2DArray(null);
 			}
 
 			if (__state.program != null && __state.program.__format == AGAL && samplerState.textureAlpha)
@@ -2382,6 +2404,10 @@ import lime.math.Vector2;
 					if (texture.__alphaTexture.__textureTarget == gl.TEXTURE_2D)
 					{
 						__bindGLTexture2D(texture.__alphaTexture.__getTexture());
+					}
+					else if (texture.__alphaTexture.__textureTarget == gl.TEXTURE_2D_ARRAY)
+					{
+						__bindGLTexture2DArray(texture.__alphaTexture.__getTexture());
 					}
 					else
 					{
@@ -2399,6 +2425,7 @@ import lime.math.Vector2;
 				else
 				{
 					__bindGLTexture2D(null);
+					__bindGLTexture2DArray(null);
 					if (__state.program.__agalAlphaSamplerEnabled[sampler] != null)
 					{
 						gl.uniform1i(__state.program.__agalAlphaSamplerEnabled[sampler].location, 0);

@@ -58,6 +58,7 @@ class Context3DState
 	private var __currentGLElementArrayBuffer:GLBuffer;
 	private var __currentGLFramebuffer:GLFramebuffer;
 	private var __currentGLTexture2D:GLTexture;
+	private var __currentGLTexture2DArray:GLTexture;
 	private var __currentGLTextureCubeMap:GLTexture;
 	private var __enableGLBlend:Bool;
 	private var __enableGLCullFace:Bool;
