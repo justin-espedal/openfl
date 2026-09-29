@@ -1165,7 +1165,7 @@ class CairoGraphics
 		
 		@:privateAccess graphics.__commands.__endBuffer();
 		
-		if (!graphics.__commands.dirty && graphics.__renderTransform.equals(graphics.__oldRenderTransform))
+		if (!graphics.__commands.dirty && graphics.__renderTransform.equals(graphics.__oldRenderTransform) && graphics.__cairo != null && graphics.__bitmap != null)
 		{
 			return;
 		}
