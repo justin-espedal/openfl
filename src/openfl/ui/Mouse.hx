@@ -4,6 +4,7 @@ package openfl.ui;
 #if lime
 import lime.app.Application;
 import lime.ui.MouseCursor as LimeMouseCursor;
+import lime.ui.MouseCursorData as LimeMouseCursorData;
 #end
 
 /**
@@ -67,6 +68,7 @@ import lime.ui.MouseCursor as LimeMouseCursor;
 
 	@:noCompletion private static var __cursor:MouseCursor = MouseCursor.AUTO;
 	@:noCompletion private static var __hidden:Bool;
+	@:noCompletion private static var __registeredCursors:Map<String, MouseCursorData> = new Map();
 
 	#if openfljs
 	@:noCompletion private static function __init__()
@@ -104,7 +106,6 @@ import lime.ui.MouseCursor as LimeMouseCursor;
 		#end
 	}
 
-	#if false
 	/**
 		Registers a native cursor under the given name, with the given data.
 
@@ -113,8 +114,34 @@ import lime.ui.MouseCursor as LimeMouseCursor;
 		@param cursor The properties for the native cursor, such as icon
 					  bitmap, specified as a MouseCursorData instance.
 	**/
-	// @:noCompletion @:dox(hide) @:require(flash10_2) public static function registerCursor (name:String, cursor:openfl.ui.MouseCursorData):Void;
-	#end
+	public static function registerCursor(name:String, cursor:MouseCursorData):Void
+	{
+		if (name == null || cursor == null || cursor.data == null || cursor.data.length == 0) return;
+
+		__registeredCursors.set(name, cursor);
+
+		#if lime
+		var limeCursorData = new LimeMouseCursorData();
+		limeCursorData.hotSpot = new lime.math.Vector2(cursor.hotSpot.x, cursor.hotSpot.y);
+		limeCursorData.frameRate = cursor.frameRate;
+
+		for (bitmapData in cursor.data)
+		{
+			if (bitmapData != null && bitmapData.image != null)
+			{
+				limeCursorData.images.push(bitmapData.image);
+			}
+		}
+
+		if (limeCursorData.images.length > 0 && Application.current != null)
+		{
+			for (window in Application.current.windows)
+			{
+				window.registerCursor(name, limeCursorData);
+			}
+		}
+		#end
+	}
 
 	/**
 		Displays the pointer. The pointer is visible by default.
@@ -133,14 +160,33 @@ import lime.ui.MouseCursor as LimeMouseCursor;
 		cursor = cacheCursor;
 	}
 
-	#if false
 	/**
 		Unregisters the native cursor with the given name.
 
 		@param name The name referring to the native cursor instance.
 	**/
-	// @:noCompletion @:dox(hide) @:require(flash11) public static function unregisterCursor (name:String):Void;
-	#end
+	public static function unregisterCursor(name:String):Void
+	{
+		if (name == null) return;
+
+		__registeredCursors.remove(name);
+
+		if (__cursor == name)
+		{
+			cursor = AUTO;
+		}
+
+		#if lime
+		if (Application.current != null)
+		{
+			for (window in Application.current.windows)
+			{
+				window.unregisterCursor(name);
+			}
+		}
+		#end
+	}
+
 	// Get & Set Methods
 	@:noCompletion private static function get_cursor():MouseCursor
 	{
@@ -166,8 +212,6 @@ import lime.ui.MouseCursor as LimeMouseCursor;
 				setCursor = TEXT;
 			case MouseCursor.__CROSSHAIR:
 				setCursor = CROSSHAIR;
-			case MouseCursor.__CUSTOM:
-				setCursor = CUSTOM;
 			case MouseCursor.__RESIZE_NESW:
 				setCursor = RESIZE_NESW;
 			case MouseCursor.__RESIZE_NS:
@@ -181,6 +225,14 @@ import lime.ui.MouseCursor as LimeMouseCursor;
 			case MouseCursor.__WAIT_ARROW:
 				setCursor = WAIT_ARROW;
 			default:
+				if (__registeredCursors.exists(value))
+				{
+					setCursor = CUSTOM(value);
+				}
+				else
+				{
+					setCursor = DEFAULT;
+				}
 		}
 
 		if (setCursor != null && !__hidden)

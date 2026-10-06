@@ -39,7 +39,6 @@ import lime.ui.MouseCursor as LimeMouseCursor;
 	public var IBEAM = "ibeam";
 
 	@:noCompletion private var __CROSSHAIR = "crosshair";
-	@:noCompletion private var __CUSTOM = "custom";
 	@:noCompletion private var __MOVE = "move";
 	@:noCompletion private var __RESIZE_NESW = "resize_nesw";
 	@:noCompletion private var __RESIZE_NS = "resize_ns";
@@ -65,7 +64,7 @@ import lime.ui.MouseCursor as LimeMouseCursor;
 			case LimeMouseCursor.RESIZE_WE: MouseCursor.__RESIZE_WE;
 			case LimeMouseCursor.WAIT: MouseCursor.__WAIT;
 			case LimeMouseCursor.WAIT_ARROW: MouseCursor.__WAIT_ARROW;
-			case LimeMouseCursor.CUSTOM: MouseCursor.__CUSTOM;
+			case LimeMouseCursor.CUSTOM(name): name;
 			default: MouseCursor.AUTO;
 		}
 	}
@@ -86,8 +85,8 @@ import lime.ui.MouseCursor as LimeMouseCursor;
 			case MouseCursor.__RESIZE_WE: LimeMouseCursor.RESIZE_WE;
 			case MouseCursor.__WAIT: LimeMouseCursor.WAIT;
 			case MouseCursor.__WAIT_ARROW: LimeMouseCursor.WAIT_ARROW;
-			case MouseCursor.__CUSTOM: LimeMouseCursor.CUSTOM;
-			default: LimeMouseCursor.DEFAULT;
+			default:
+				LimeMouseCursor.CUSTOM(this);
 		}
 	}
 	#end
